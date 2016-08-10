@@ -67,6 +67,7 @@ As long as `DEFAULT`section configued, `Parameter` section would be generated au
 - `RedAlertStoragePath` is the remote filesystem storage path. In this verison Red Alert supports local filesystem and pangu distributed filesystem, please prefixed to ```file://``` or ```pangu://``` and then make sure this directory could be accessed. If pangu has been installed, `fsUtil` is panggu's binary path or script, it's neccessary to specify.
 
 ***Static Confiuation***   
+
 `static` directory provide static files to web server. Modify `ra_conf.js` file, `api_url` should be specifid to your `http://<ip>:<port>` address or url. It looks like   
 
     var ra_conf = {     
