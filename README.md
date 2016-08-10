@@ -19,6 +19,7 @@ Configuation
 ------------
 
 ***common configuation***
+
 Red Alert Web could be started in three ways(apache, uwsgi and location). However no matter which way, *conf/red\
 _alert_web.conf* and *static/ra_conf.js* are the configuation files that must be modified. *conf/red_alert_web.c\
 onf* looks like
