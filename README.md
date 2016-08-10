@@ -2,7 +2,8 @@ Red Alert Web
 =============
 Introduction
 ------------
-Red Alert is an open source, browser based cluster monitoring system. Users could configure and operate backends through web, like shielding policies and configure parameters. On browser users could grasp backends status and infomation as well.
+Red Alert is an open source, browser based cluster monitoring system. Users could configure red alert backend on\
+ browser, like shielding policies and configure parameters, as well as grasp backends status and infomation.
 
 Requirements
 ------------
@@ -13,13 +14,14 @@ Requirements
 Installation
 ------------
 * Get Code: `git clone http://gitlab.alibaba-inc.com/red_alert/red_alert_web.git`
-* deploy
-* Running by local script
-* Running on UWSGI Server
-* Running on Apache Server
 
-***common configuation***   
-Red Alert Web could be running in three ways. However no matter which way, *conf/red_alert_web.conf* and *static/ra_conf.js* are the configuation files that must be modified. *conf/red_alert_web.conf* looks like
+Configuation
+------------
+
+***common configuation***
+Red Alert Web could be started in three ways(apache, uwsgi and location). However no matter which way, *conf/red\
+_alert_web.conf* and *static/ra_conf.js* are the configuation files that must be modified. *conf/red_alert_web.c\
+onf* looks like
 
     [DEFAULT]    
     projectRoot = /var/www/html/red_alert_web    
