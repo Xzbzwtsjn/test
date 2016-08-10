@@ -2,8 +2,7 @@ Red Alert Web
 =============
 Introduction
 ------------
-Red Alert is an open source, browser based cluster monitoring system. Users could configure red alert backend on\
- browser, like shielding policies and configure parameters, as well as grasp backends status and infomation.
+Red Alert is an open source, browser based cluster monitoring system. Users could configure red alert backend on browser, like shielding policies and configure parameters, as well as grasp backends status and infomation.
 
 Requirements
 ------------
@@ -18,11 +17,9 @@ Installation
 Configuation
 ------------
 
-***common configuation***
+***common configuation***   
 
-Red Alert Web could be started in three ways(apache, uwsgi and location). However no matter which way, *conf/red\
-_alert_web.conf* and *static/ra_conf.js* are the configuation files that must be modified. *conf/red_alert_web.c\
-onf* looks like
+Red Alert Web could be started in three ways(apache, uwsgi and location). However no matter which way, *conf/red_alert_web.conf* and *static/ra_conf.js* are the configuation files that must be modified. *conf/red_alert_web.conf* looks like
 
     [DEFAULT]    
     projectRoot = /var/www/html/red_alert_web    
@@ -81,8 +78,11 @@ As long as `DEFAULT`section configued, `Parameter` section would be generated au
 
 *NOTE:* If you don't need authentication, please set `disable_account` option true. As loog as `false` setted, `buc_sso_url` will work to verify identidy.
   
-**Running**   
-OK now, All basical configuations have been done, running project by `python raweb/main.py`, and then point your browser at `http://localhost:50007/index.html`. 
+Running
+-------
+OK now, All basical configuations have been done, running project by `python raweb/main.py`, and then point your browser at `http://localhost:50007/index.html`.   
+
+***uwsgi***
 
 If you prefer to uwsgi server, we provide [uwsgi1.4](https://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html), just enter `uwsgi` dirctory and "making" it. If provided default `raweb.ini` file used, you should modify `raweb_install_prefix` and `http` options at least. The default `raweb.ini` looks like
 
@@ -99,6 +99,8 @@ If you prefer to uwsgi server, we provide [uwsgi1.4](https://uwsgi-docs.readthed
     pidfile = ./uwsgi.pid
 
 Creating your own `*.ini` conf file is aslo permitted, [Quickstart for Python Application](https://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html). Running `./uwsgi/uwsgi --ini raweb.ini` to start web service. 
+
+***Apache***
 
 Web service could alse be deployed on [Apache Server](https://httpd.apache.org/docs/2.2/).
 We provide a template, a virtual host included, on `conf/` dir for reference. The `raweb.conf.template` is
@@ -119,7 +121,9 @@ We provide a template, a virtual host included, on `conf/` dir for reference. Th
 
 Rename `.template` file, drop *.template* suffix and place the file  on `/etc/httpd/conf.d`, then restart your httpd service.
 
-## Quick Start
+Quick Start
+-----------
+
 You're up and running! Red Alert Web is now running.
 
 The first screen you arrived at is  policy configuation, where policies could be editted here.In shield scrren, policies in specified machines could be shield unitl specified time. `data source` in miscellaneous configuration should be added at least one when first run, without data source backends can't fetch metrics. At present backends support `Graphite` and `Amonitor`, but you can access other data sources as well, just implement `fetchMetrics` interface.In deploy screen, you could see tables' modifications. Online backend's infomation and status would be showed on `console` screen as well as `sqlite` version list and `storagePath`. In admin screen, please pay attention to the *Explanation*.  
@@ -134,4 +138,5 @@ The first screen you arrived at is  policy configuation, where policies could be
 
 - *reload* : If you want to rollback to old version, points to *reload*. Reload option will rollback all tables except `redAlert`, course outdate backend infomation is uesless and dangerous.
 
-## Contribute
+Contribute
+----------
