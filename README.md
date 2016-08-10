@@ -2,7 +2,7 @@ Red Alert Web
 =============
 Introduction
 ------------
-Red Alert is an open source, browser based cluster monitoring system. Red Alert Web provides users to configue and operate backends, like shielding policies or specific machines. On browser you can grasp backends status and infomation as well.
+Red Alert is an open source, browser based cluster monitoring system. Users could configure and operate backends through web, like shielding policies and configure parameters. On browser users could grasp backends status and infomation as well.
 
 Requirements
 ------------
@@ -14,10 +14,12 @@ Installation
 ------------
 * Get Code: `git clone http://gitlab.alibaba-inc.com/red_alert/red_alert_web.git`
 * deploy
-* Run on Apache Server or UWSGI Server or local script.
+* Running by local script
+* Running on UWSGI Server
+* Running on Apache Server
 
 ***common configuation***   
-Red Alert Web could be running in three ways, however no matter which way you choice, *conf/red_alert_web.conf* and *static/ra_conf.js* are the configuation files must be modified. *conf/red_alert_web.conf* looks like
+Red Alert Web could be running in three ways. However no matter which way, *conf/red_alert_web.conf* and *static/ra_conf.js* are the configuation files that must be modified. *conf/red_alert_web.conf* looks like
 
     [DEFAULT]    
     projectRoot = /var/www/html/red_alert_web    
@@ -39,30 +41,30 @@ Red Alert Web could be running in three ways, however no matter which way you ch
     [fsLib]   
     fsUtil = %(projectRoot)s/fs_lib/bin/fs_util
 
-In `DEFAULT` section, `projectRoot` is red alert web's home, to fill with an real absolute path. `workspace` could be specified to any path with permission.   
+In `DEFAULT` section, `projectRoot` is web's root directory and  `workspace` could be specified to any path with permission.   
 
-As long as `DEFAULT`section configued, `Parameter` section will be generated automatically.   
+As long as `DEFAULT`section configued, `Parameter` section would be generated automatically.   
 
 - `RedAlertWebWorkRoot` is Red Alert Web's workspace home.   
 
 - `RedAlertWebConfDir` is Red Alert Web's `sqlite` file directory.   
 
-- `RedAlertWebTablePath` is `sqlite`'s absolte path. This sqlite db file contains `Policy`, `RedAlert`, `DataSource`, `Pairs`, `Shield` tables, that will be translated to `json` in backend.   
+- `RedAlertWebTablePath` is `sqlite`'s absolte path. This sqlite db file contains `Policy`, `RedAlert`, `DataSource`, `Pairs`, `Shield` tables, that would be translated to `json` in backend.   
 
-- `RedAlertWebAuxPath` is `raweb.aux.db`'s absolte path that is a sqlite database file as well, but only be used by web self. `raweb.aux.db` records `sqlite` table's modified status.   
+- `RedAlertWebAuxPath` is `raweb.aux.db`'s absolute path which is sqlite file as well, but only be used by web self. `raweb.aux.db` records `sqlite` table's modified status.   
 
-- `RedAlertWebJsonPath` is `raweb.json`'s absolte path. This json will be used to verify input string.   
+- `RedAlertWebJsonPath` is `raweb.json`'s absolute path, which would be used to verify input string.   
 
-- `RedAlertWebVersionDir` is web's version directory that records `sqlite`'s version changes. If any table changes happened and be deployed, web will update `sqlite` file and generate a new version in *RedAlertWebVersionDir*, then the latest `sqlite` file will be placed into this version. so *RedAlertWebVersionDir* is essential.   
+- `RedAlertWebVersionDir` is web's version directory that records `sqlite`'s version update. If any table have been modified and deployed, a new `sqlite` version would be produced in *RedAlertWebVersionDir* so *RedAlertWebVersionDir* is essential.   
 
-- `runPort` is web's listening port, that only be neccessory in local script running. If deployed on Apache Web server or run with uwsgi server, port would be configed by web servers, just ignoring this option.   
+- `runPort` is an listening port, that only be neccessory in local script running. Deployed on Apache or run with `uwsgi`, port would be assigned in those server's configuration, just ignore this option.   
 
-- `MaxRaBackEnd` is the max quantity of red alert backend permitted.   
+- `MaxRaBackEnd` is the max quantity of red alert backend permitted, if there are multiple backends,only one backend would provide the `MetricsTree`.   
 
-- `RedAlertStoragePath` is the remote filesystem storage path. In this verison Red Alert supports local filesystem and pangu distributed filesystem now, please prefix with ```file://``` or ```pangu://``` and then make sure this directory could be accessed. If pangu has been installed, `fsUtil` is panggu's binary path or script, it's neccessary to specify while pangu used.
+- `RedAlertStoragePath` is the remote filesystem storage path. In this verison Red Alert supports local filesystem and pangu distributed filesystem, please prefixed to ```file://``` or ```pangu://``` and then make sure this directory could be accessed. If pangu has been installed, `fsUtil` is panggu's binary path or script, it's neccessary to specify.
 
 ***Static Confiuation***   
-Web server will find static files in ```static/``` directory. Modify ```ra_conf.js``` file. ```api_url``` should be specifid to your ```http://<ip>:<port>``` address or url. It looks like   
+`static` directory provide static files to web server. Modify `ra_conf.js` file, `api_url` should be specifid to your `http://<ip>:<port>` address or url. It looks like   
 
     var ra_conf = {     
         "api_url": "http://100.82.23.31:5011",   
@@ -73,12 +75,12 @@ Web server will find static files in ```static/``` directory. Modify ```ra_conf.
         "disable_account": true   
         };
 
-*NOTE:* If you don't need authentication, please set `disable_account` option true. If `false` setted, `buc_sso_url` will work to verify identidy.
+*NOTE:* If you don't need authentication, please set `disable_account` option true. As loog as `false` setted, `buc_sso_url` will work to verify identidy.
   
 **Running**   
-OK now, All basical configuations have been done, running web by `python raweb/main.py`, and then point your browser at `http://localhost:50007/index.html`. 
+OK now, All basical configuations have been done, running project by `python raweb/main.py`, and then point your browser at `http://localhost:50007/index.html`. 
 
-If you prefer to UWSGI server, we provide [uwsgi1.4](https://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html), just enter `uwsgi` and "making" it. Then if provided default `raweb.ini` file used, you should modify at least `raweb_install_prefix` and `http` options. The default `raweb.ini` looks like
+If you prefer to uwsgi server, we provide [uwsgi1.4](https://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html), just enter `uwsgi` dirctory and "making" it. If provided default `raweb.ini` file used, you should modify `raweb_install_prefix` and `http` options at least. The default `raweb.ini` looks like
 
     [uwsgi]
     raweb_install_prefix = /var/www/html/red_alert_web
@@ -92,31 +94,31 @@ If you prefer to UWSGI server, we provide [uwsgi1.4](https://uwsgi-docs.readthed
     threads = 10
     pidfile = ./uwsgi.pid
 
-Creating your own `*.ini` conf file as well, [Quickstart for Python Application](https://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html). If all those configuations have been done, running `./uwsgi/uwsgi --ini raweb.ini` to start web service. 
+Creating your own `*.ini` conf file is aslo permitted, [Quickstart for Python Application](https://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html). Running `./uwsgi/uwsgi --ini raweb.ini` to start web service. 
 
-Red Alert Web could alse deployed on [Apache Server](https://httpd.apache.org/docs/2.2/).
-We provide a template including a virtual host to run on `conf/` dir for reference. `raweb.conf.template` looks like
+Web service could alse be deployed on [Apache Server](https://httpd.apache.org/docs/2.2/).
+We provide a template, a virtual host included, on `conf/` dir for reference. The `raweb.conf.template` is
 
     Listen 100.82.23.31:5011
     <VirtualHost 100.82.23.31:5011>
         ServerName www.raweb.com
-        DocumentRoot /var/www/html/red_alert_web
-        WSGIDaemonProcess red_alert_web python-path=/usr/ali/lib/python2.5/site-packages/:/var/www/html/red_alert_web
-        WSGIScriptAlias / /var/www/html/red_alert_web/raweb/raweb.wsgi process-group=red_alert_web application-group=%{GLOBAL}
-        CustomLog /var/log/httpd/raweb_access.log common
-        ErrorLog /var/log/httpd/raweb_error.log
-        <Directory /var/www/html/red_alert_web>
-                Order allow,deny
-                Allow from all
-        </Director>
-    </VirtualHost>
+                   DocumentRoot /var/www/html/red_alert_web
+                   WSGIDaemonProcess red_alert_web python-path=/usr/ali/lib/python2.5/site-packages/:/var/www/html/red_alert_web
+                   WSGIScriptAlias / /var/www/html/red_alert_web/raweb/raweb.wsgi process-group=red_alert_web application-group=%{GLOBAL}
+                   CustomLog /var/log/httpd/raweb_access.log common
+                   ErrorLog /var/log/httpd/raweb_error.log
+                 <Directory /var/www/html/red_alert_web>
+                              Order allow,deny
+                              Allow from all
+                </Director>
+        </VirtualHost>
 
-If you create your own `.conf` file, place it on `/etc/httpd/conf.d`, then restart your httpd service. `sudo service httpd restart`
+Rename `.template` file, drop *.template* suffix and place the file  on `/etc/httpd/conf.d`, then restart your httpd service.
 
 ## Quick Start
-You're up and running! Red alert web is now running on port 50007.so point your browser at http://localhost:50007/index.html.
+You're up and running! Red Alert Web is now running.
 
-The first screen you arrived at is Policy, modify policies here. If web is the first run, `data source` in Miscellaneous Configuration should be added at least one, without data source backends can't fetch metric trees. At present red alert backend supports `Graphite` and `Amonitor`, but you can access other data source as well, just implement `fetchMetrics` interface. Then run backends, online backend's infomation and status will be showed on `console` screen as well as `sqlite` version list and `storagePath`. In this screen, please pay attention to the *Explanation*.  
+The first screen you arrived at is  policy configuation, where policies could be editted here.In shield scrren, policies in specified machines could be shield unitl specified time. `data source` in miscellaneous configuration should be added at least one when first run, without data source backends can't fetch metrics. At present backends support `Graphite` and `Amonitor`, but you can access other data sources as well, just implement `fetchMetrics` interface.In deploy screen, you could see tables' modifications. Online backend's infomation and status would be showed on `console` screen as well as `sqlite` version list and `storagePath`. In admin screen, please pay attention to the *Explanation*.  
  
 - *Refresh Status* : Refresh and read web's current status immediately.   
 
